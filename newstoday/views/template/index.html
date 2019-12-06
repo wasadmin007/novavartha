@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href={% static 'index.css' %}>
+<style>
+.vertical-menu {
+  width: 200px;
+  height: 150px;
+  overflow-y: auto;
+}
+
+.vertical-menu a {
+  background-color: #eee;
+  color: black;
+  display: block;
+  padding: 12px;
+  text-decoration: none;
+}
+
+.vertical-menu a:hover {
+  background-color: #ccc;
+}
+
+.vertical-menu a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+</style>
+
+</head>
+<body>
+<a href=/><h1>{{title}}</h1></a>
+<ul>
+{% block tab %}
+		{%for tab  in Tabs %}
+		<li>
+		<div class="vertical-menu">	
+		<p>dsfsfsadfasdfasdfas</p>
+		</div>
+		{%endfor%}	
+{% endblock tab %}
+</ul>
+<ul><li>
+	<div class = "listnews">
+		<iframe name="listnews" id="listnews" class="listnews" src="listnews" />  </iframe>
+	</div>
+</body>
+</li></ul>
+
+
+<script >
+
+</script>
+
+
+</html>

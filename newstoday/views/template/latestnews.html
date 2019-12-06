@@ -1,0 +1,14 @@
+{% load static %}
+	{% block awszones %}
+		{%for news in data%}
+                 {%for keys,values in news.items%}
+   		  {%if '_id' not in keys%}	
+	  	   {{keys}} 
+                   {%for value in values%}
+		    <li>{{value.url}}{{value.text}} {{value.tab}}</li>
+			{%endfor%}
+		  {%endif%}
+		{%endfor%}
+		{%endfor%}
+		
+	{% endblock awszones %}
