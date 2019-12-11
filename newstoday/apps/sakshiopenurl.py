@@ -53,8 +53,8 @@ def news():
                js='onmouseover="openInNewTab('+str(urlheader)+')"'
             content = "<a "+js+" href="+str(urlheader)+">"+str(i.text)+"</a> <br>"
             data.append( { "url": str(urlheader), "text": str(i.text) ,"tab": "nav"})
-
-
+ 
+          
         alldata = {"sakshi": data}
         print(conn().insert(alldata,'sakshi',country='india',language='telugu') )        
             

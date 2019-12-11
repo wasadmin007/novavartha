@@ -13,19 +13,19 @@ class conn():
 
   def insert(self,alldata,channel,language='telugu',country='india'):
       newsdb=conn().db("news")
-      cols = newsdb.list_collection_names()
-      if country in str(cols):
-       if language in str(cols):
-        for cl in cols:   
-          #print (cl)
-          allcol = newsdb[cl]
-          for col in allcol.find():
+      cl='news.'+country+'.'+language 
+      print(cl)
+      allcol = newsdb[cl]
+      for col in allcol.find():
             print(col.keys())
             if channel in col.keys():
+              #print (alldata)
               udata={"$set": alldata}
               allcol.update_many(col, udata)
             else:
-               allcol.insert_many(alldata) 
+               udata={"$set": alldata}
+               print('Not existing key inserting')
+               allcol.update_many(col, udata)
 
 
 #print (conn().insert({"sakshi": [{}]}))

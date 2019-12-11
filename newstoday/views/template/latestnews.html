@@ -1,14 +1,78 @@
-{% load static %}
-	{% block awszones %}
-		{%for news in data%}
-                 {%for keys,values in news.items%}
-   		  {%if '_id' not in keys%}	
-	  	   {{keys}} 
-                   {%for value in values%}
-		    <li>{{value.url}}{{value.text}} {{value.tab}}</li>
-			{%endfor%}
-		  {%endif%}
-		{%endfor%}
-		{%endfor%}
-		
-	{% endblock awszones %}
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {
+  font-family: Arial;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.dot {
+
+  height: 10px;
+  width: 10px;
+  background-color: #bbb;
+  border-radius: 20%;
+  display: inline-block;
+}
+
+.container {
+  border: 3px solid #f1f1f1;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  width: 600px;
+  height: 350px;
+overflow-y: auto;
+}
+
+.top {
+  text-align: left;
+  padding: 10px;
+  background: #f1f1f1;
+}
+
+.content {
+
+overflow-y: auto;
+}
+</style>
+</head>
+<body backgroundcolor="skyblue">
+{% block awszones %}
+{%for news in data%}
+{%for keys,values in news.items%}
+{%if '_id' not in keys%}
+<div class="container">
+ <div id="myHeader" class="top" > {{keys}} </div>
+ {%for value in values%}
+ <div class="content">
+    <li><a href={{value.url}} target="popup" > {{value.text}}</a></li>
+</div>
+ {%endfor%}
+ {%endif%}
+</div>
+  {%endfor%}
+
+
+{%endfor%}
+        {% endblock awszones %}
+</body>
+
+<script>
+window.onscroll = function() {myFunction()};
+
+var header = document.getElementById("myHeader");
+var sticky = header.offsetTop;
+
+function myFunction() {
+  if (window.pageYOffset > sticky) {
+    header.classList.add("sticky");
+  } else {
+    header.classList.remove("sticky");
+  }
+}
+</script>

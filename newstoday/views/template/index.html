@@ -3,10 +3,19 @@
 <html>
 <head>
 <link rel="stylesheet" type="text/css" href={% static 'index.css' %}>
+<a href=/><h1>{{title}}</h1></a> 
+<ul id="horinzantal-menu">
+<form id="countryForm" action="/" method="post" homeurl="{% url 'home' %}" novalidate>
+    {% csrf_token %}
+    {{ forms }}
+</form>
+</ul>
 <style>
+
 .vertical-menu {
-  width: 200px;
-  height: 150px;
+  width: 500px;
+
+  height: 350px;
   overflow-y: auto;
 }
 
@@ -14,7 +23,7 @@
   background-color: #eee;
   color: black;
   display: block;
-  padding: 12px;
+  padding: 2px;
   text-decoration: none;
 }
 
@@ -25,33 +34,108 @@
 .vertical-menu a.active {
   background-color: #4CAF50;
   color: white;
+  padding: 15px 32px;
 }
 </style>
 
 </head>
 <body>
-<a href=/><h1>{{title}}</h1></a>
-<ul>
+
 {% block tab %}
-		{%for tab  in Tabs %}
-		<li>
-		<div class="vertical-menu">	
-		<p>dsfsfsadfasdfasdfas</p>
-		</div>
+		{%for tab  in countries %}
+                <p id="error"> </p>
+		<div id="main"> </div>
+
 		{%endfor%}	
 {% endblock tab %}
-</ul>
-<ul><li>
-	<div class = "listnews">
-		<iframe name="listnews" id="listnews" class="listnews" src="listnews" />  </iframe>
-	</div>
+
 </body>
-</li></ul>
 
 
-<script >
 
-</script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script>
+   window.onload = function starup() {
+      var url = $("#countryForm").attr("homeurl")
+     var countryId = $("#id_country").val();  // get the selected country ID from the HTML input
+      var languageId = $("#id_language").val();
+      $.ajax({                       // initialize an AJAX request
+        url: url+'latestnews/'+countryId+'/'+languageId,
+        data: {'region': countryId},
+        success: function (data) {
+                                // `data` is the return of the `load_cities` view function
+           $("#error").empty();
+          //$("#id_language").append(data)
+           console.log(data);
+          //  $('#showresults').replaceWith($('#showresults',data));
+          $("#main").html(data);
+        },
+        error: function(jqxhr, status, exception) {
+           $("#error").html('Exception: We dont have any news for ',languageId); // alert('Exception: We dont have any news for ',languageId );
+          $("#main").empty();
+         }
+      });
 
+    };
+
+  
+
+
+    $("#id_country").change(function () {
+      var url = $("#countryForm").attr("homeurl")
+      var countryId = $(this).val();  // get the selected country ID from the HTML input
+
+      $.ajax({                       // initialize an AJAX request
+        url: url+'languages/'+countryId,
+        data: {'region': countryId},
+        success: function (data) {   // `data` is the return of the `load_cities` view function
+          $("#id_language").empty();
+          //$("#id_language").append(data)
+           console.log(data)
+           var data1 = data.split(' ');
+
+           
+	   $.each(data1, function (index) {
+              console.log(typeof(data1)) ; 
+                  $("#id_language").append($('<option></option>').val(data1[index]).html(data1[index]))
+ 
+	 });
+        
+
+
+      },
+        error: function(jqxhr, status, exception) {
+             alert('Exception:', exception );
+            $("#main").empty();
+         }
+      });
+
+    });
+
+  $("#id_language").change(function () {
+      var url = $("#countryForm").attr("homeurl")
+     var countryId = $("#id_country").val();  // get the selected country ID from the HTML input
+      var languageId = $(this).val();
+      $.ajax({                       // initialize an AJAX request
+        url: url+'latestnews/'+countryId+'/'+languageId,
+        data: {'region': countryId},
+        success: function (data) {   
+				// `data` is the return of the `load_cities` view function
+	   $("#error").empty();
+          //$("#id_language").append(data)
+           console.log(data);
+	  //  $('#showresults').replaceWith($('#showresults',data));
+ 	  $("#main").html(data);
+	},
+	error: function(jqxhr, status, exception) {
+           $("#error").html('Exception: We dont have any news for ',languageId); // alert('Exception: We dont have any news for ',languageId );
+          $("#main").empty();
+	 }
+      });
+
+    });
+
+
+  </script>
 
 </html>

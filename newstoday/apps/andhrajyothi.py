@@ -21,11 +21,9 @@ def news():
         #now we want to print only the text part of the anchor.
         #find all the elements of a, i.e anchor
         head='<html><head><title>India News Today &hellip;</title><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/></head><body>'
-        #l = soup.findAll("div",attrs={"class": "view-content"})
         #l = soup.findAll()
 
-
-        l = soup.findAll("section", attrs={"class": "wrapper"})
+        l = soup.findAll("section" )
         #now we want to print only the text part of the anchor.
         alldata = {}
         data = []

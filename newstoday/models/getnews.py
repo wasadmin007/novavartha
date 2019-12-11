@@ -10,6 +10,7 @@ class getnews():
        cols = db.collection_names()
        return cols
     def getcollectiondata(self,col):
+       
        col = db[col]
        coldata = col.find()
        return coldata
